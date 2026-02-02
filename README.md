@@ -3,7 +3,7 @@
 [![Paper](https://img.shields.io/badge/Paper-PDF-red)](ijcai26.pdf)
 [![Website](https://img.shields.io/badge/Project-Page-blue)](https://dyamik.github.io/IJCAI--ECAI-26/)
 
-> **IJCAI-ECAI 2026**  
+> **IJCAI-ECAI 2026**
 > Tianshi Wang, Fengling Li, Yukun Dai, Wencheng Ye, Zhiyong Cheng, Dongrui Liu
 
 ## 📄 Abstract
@@ -48,7 +48,7 @@ For questions or collaboration:
 ## 🏢 Affiliations
 
 - <sup>1</sup>Tongji University
-- <sup>2</sup>University of Technology Sydney  
+- <sup>2</sup>University of Technology Sydney
 - <sup>3</sup>Hefei University of Technology
 - <sup>4</sup>Shanghai Artificial Intelligence Laboratory
 
