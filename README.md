@@ -40,7 +40,6 @@ For questions or collaboration:
 @inproceedings{wang2026adversarial,
   title={Adversarial Robustness in Embodied AI: A Closed-Loop Perspective on Attacks and Defenses},
   author={Wang, Tianshi and Li, Fengling and Dai, Yukun and Ye, Wencheng and Cheng, Zhiyong and Liu, Dongrui},
-  booktitle={Proceedings of the Thirty-Third International Joint Conference on Artificial Intelligence (IJCAI-ECAI)},
   year={2026}
 }
 ```
