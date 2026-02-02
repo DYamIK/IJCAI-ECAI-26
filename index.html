@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adversarial Robustness in Embodied AI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Microsoft YaHei', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #ffffff;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 50px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            background: white;
+            padding: 50px 40px 40px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            font-weight: 600;
+            color: #2c3544;
+            margin-bottom: 35px;
+            line-height: 1.4;
+        }
+
+        .authors {
+            font-size: 1.15em;
+            color: #333;
+            margin-bottom: 35px;
+            line-height: 1.8;
+        }
+
+        .authors a {
+            color: #1867c0;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .authors a:hover {
+            color: #1565c0;
+            text-decoration: underline;
+        }
+
+        .authors sup {
+            font-size: 0.75em;
+        }
+
+        .affiliations {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 50px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .affiliation {
+            text-align: center;
+            max-width: 200px;
+        }
+
+        .affiliation-name {
+            font-size: 0.85em;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .affiliation-name sup {
+            font-size: 0.9em;
+            color: #1867c0;
+            font-weight: 600;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            margin-top: 35px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 32px;
+            font-size: 1em;
+            font-weight: 500;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.2s;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-paper {
+            background: #5865f2;
+        }
+
+        .btn-paper:hover {
+            background: #4752c4;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(88, 101, 242, 0.3);
+        }
+
+        .btn-code {
+            background: #2f3136;
+        }
+
+        .btn-code:hover {
+            background: #1a1b1e;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        section {
+            background: #fafafa;
+            padding: 50px 60px;
+            margin: 40px 0;
+            border-radius: 12px;
+        }
+
+        h2 {
+            font-size: 2em;
+            color: #2c3544;
+            margin-bottom: 25px;
+            text-align: center;
+            position: relative;
+            padding-bottom: 12px;
+            font-weight: 600;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: #1867c0;
+            border-radius: 2px;
+        }
+
+        .abstract-content {
+            font-size: 1em;
+            text-align: justify;
+            line-height: 1.8;
+            color: #444;
+        }
+
+        .framework-image {
+            width: 100%;
+            margin: 25px 0;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .highlight-card {
+            background: white;
+            padding: 28px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            transition: all 0.2s;
+        }
+
+        .highlight-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .highlight-card h3 {
+            color: #1867c0;
+            margin-bottom: 12px;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+
+        .highlight-card p {
+            color: #555;
+            line-height: 1.7;
+            font-size: 0.95em;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+            font-size: 0.9em;
+            border-top: 1px solid #e0e0e0;
+            margin-top: 50px;
+        }
+
+        .icon {
+            width: 18px;
+            height: 18px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .authors {
+                font-size: 1em;
+            }
+
+            section {
+                padding: 35px 25px;
+            }
+
+            .affiliations {
+                flex-direction: column;
+                gap: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Adversarial Robustness in Embodied AI:<br>A Closed-Loop Perspective on Attacks and Defenses</h1>
+            
+            <div class="authors">
+                <a href="#">Tianshi Wang<sup>1</sup></a>, 
+                <a href="#">Fengling Li<sup>2</sup></a>, 
+                <a href="#">Yukun Dai<sup>1</sup></a>, 
+                <a href="#">Wencheng Ye<sup>1</sup></a>, 
+                <a href="#">Zhiyong Cheng<sup>3</sup></a>, 
+                <a href="#">Dongrui Liu<sup>4</sup></a>
+            </div>
+
+            <div class="affiliations">
+                <div class="affiliation">
+                    <div class="affiliation-name"><sup>1</sup>同 济 大 学<br>Tongji University</div>
+                </div>
+                <div class="affiliation">
+                    <div class="affiliation-name"><sup>2</sup>悉尼科技大学<br>University of Technology Sydney</div>
+                </div>
+                <div class="affiliation">
+                    <div class="affiliation-name"><sup>3</sup>合肥工业大学<br>Hefei University of Technology</div>
+                </div>
+                <div class="affiliation">
+                    <div class="affiliation-name"><sup>4</sup>上海人工智能实验室<br>Shanghai Artificial Intelligence Laboratory</div>
+                </div>
+            </div>
+
+            <div class="buttons">
+                <a href="ijcai26.pdf" class="btn btn-paper" target="_blank">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                    </svg>
+                    Paper
+                </a>
+                <a href="https://github.com" class="btn btn-code" target="_blank">
+                    <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                    Code (Coming Soon)
+                </a>
+            </div>
+        </header>
+
+        <section>
+            <h2>Abstract</h2>
+            <div class="abstract-content">
+                <p>
+                    Embodied AI systems interact with the physical world through multi-stage closed-loop processes, enabling capabilities such as spatial understanding, manipulation, and navigation. While recent advances have significantly strengthened these abilities, they also introduce new security vulnerabilities with potentially serious physical consequences. However, adversarial threats in embodied systems remain fragmented and lack a unified analytical framework.
+                </p>
+                <br>
+                <p>
+                    In this survey, we review adversarial attacks and defenses in embodied AI from a closed-loop perspective, analyzing how security risks emerge, propagate, and amplify across embodied systems. We organize prior work into a functional taxonomy spanning <strong>perception-level</strong>, <strong>decision & planning-level</strong>, and <strong>execution & interaction-level</strong> threats, and further distinguish between <strong>optimization-time</strong> and <strong>deployment-time</strong> interventions.
+                </p>
+                <br>
+                <p>
+                    For each category, we synthesize representative attack strategies and defense mechanisms, including semantic backdoors, physical perturbations, safety fine-tuning, and runtime safeguards. Beyond taxonomy, we highlight fundamental differences between adversarial robustness in embodied AI and in conventional vision or language models, emphasizing closed-loop feedback, long-horizon safety, and physical constraints. Finally, we examine existing benchmarks and evaluation protocols, discuss their limitations, and outline open challenges and future directions toward securing embodied AI in real-world environments.
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Framework Overview</h2>
+            <img src="framework.pdf" alt="Framework Overview" class="framework-image">
+            <p style="text-align: center; color: #666; margin-top: 20px; font-style: italic;">
+                Overview of adversarial attacks and defenses in embodied AI from a closed-loop perspective, organized by functional stages and intervention phases, highlighting risk propagation and amplification in the closed-loop process.
+            </p>
+        </section>
+
+        <section>
+            <h2>Key Contributions</h2>
+            <div class="highlights">
+                <div class="highlight-card">
+                    <h3>🔄 Closed-Loop Taxonomy</h3>
+                    <p>
+                        We propose a closed-loop taxonomy that organizes adversarial attacks and defenses by functional stages and intervention phases, enabling stage-aware risk analysis in embodied systems.
+                    </p>
+                </div>
+                <div class="highlight-card">
+                    <h3>📚 Comprehensive Review</h3>
+                    <p>
+                        We systematically review adversarial attacks, defenses, and evaluation benchmarks under a unified closed-loop lens, facilitating coherent comparison across previously fragmented work.
+                    </p>
+                </div>
+                <div class="highlight-card">
+                    <h3>🚀 Future Directions</h3>
+                    <p>
+                        We identify key limitations of existing approaches and outline future research directions for secure embodied AI, including closed-loop modeling, physical-world threats, and lifecycle-consistent defenses.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Contact</h2>
+            <p style="text-align: center; color: #666; font-size: 1.1em;">
+                For questions or collaboration, please contact:<br><br>
+                <strong>Tianshi Wang</strong>: <a href="mailto:tswang0116@163.com" style="color: #3498db; text-decoration: none;">tswang0116@163.com</a><br>
+                <strong>Yukun Dai</strong>: <a href="mailto:yukundai@tongji.edu.cn" style="color: #3498db; text-decoration: none;">yukundai@tongji.edu.cn</a>
+            </p>
+        </section>
+
+        <footer>
+            <p>© 2026 Adversarial Robustness in Embodied AI | IJCAI-ECAI 2026</p>
+        </footer>
+    </div>
+</body>
+</html>
